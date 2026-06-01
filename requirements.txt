@@ -7,3 +7,9 @@ scikit-learn
 optuna
 notebook
 ipykernel
+from_root
+pymongo
+ensure
+config-box
+
+
