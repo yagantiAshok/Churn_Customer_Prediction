@@ -1,0 +1,20 @@
+
+
+
+DATA_BASE_NAME = "churn"
+COLLECTION_NAME = "churn_records"
+MONGODB_URI = "churn_mongodb"
+
+
+'''
+DATA_INGESTION COMPONENT REALTED CONSTANTS STARTS WITH DATA_INGESTION
+
+'''
+
+DATA_INGRSTION_MAIN_FOLDER :str = "Data_Ingestion"
+DATA_INGESTION_RAW_DATA_FOLDER:str = "raw_data"
+DATA_INGESTION_RAW_DATA_FILE_PATH:str = "churn.csv"
+DATA_INGESTION_INGESTED_FOLDER :str = "Ingested"
+DATA_INGESTION_INGESTED_TRAIN_FILE:str = "train.csv"
+DATA_INGESTION_INGESTED_TEST_FILE : str = "test.csv"
+train_test_split_ratio :float = 0.25

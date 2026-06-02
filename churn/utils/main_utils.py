@@ -142,3 +142,19 @@ def create_directories(folders:list[str],verbose:True)->None:
         except Exception as e:
 
             raise CustomException(e,sys)
+
+@ensure_annotations
+
+def create_folder_path(folder:str):
+
+    try:
+
+        path = Path(folder)
+
+        path.parent.mkdir(parents=True,exist_ok=True)
+
+        logger.info(f"Fodler is created at {folder}")
+
+
+    except Exception as e:
+        raise CustomException(e,sys)
