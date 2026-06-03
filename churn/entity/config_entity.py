@@ -20,4 +20,12 @@ class DataIngestionConfig:
     data_ingestion_train_file_path :str = os.path.join(data_ingestion_folder,DATA_INGESTION_INGESTED_FOLDER,DATA_INGESTION_INGESTED_TRAIN_FILE)
     data_ingestion_test_file_path :str = os.path.join(data_ingestion_folder,DATA_INGESTION_INGESTED_FOLDER,DATA_INGESTION_INGESTED_TEST_FILE)
     train_test_split_ratio:float = train_test_split_ratio
+
+
+@dataclass
+class DataValidationConfig:
+
+    data_validation_main_folder :str = os.path.join(main_artifact,DATA_VALIDATION_MAIN_FOLDER)
+    data_validation_status_file :str = os.path.join(data_validation_main_folder,DATA_VALIDATION_STATUS_FOLDER,DATA_VALIDATION_STATUS_FILE)
+    data_validation_drift_report_file :str = os.path.join(data_validation_main_folder,DATA_VALIDATION_DRIFT_REPORT_FOLDER,DATA_VALIDATION_DRIFT_REPORT_FILE)
     

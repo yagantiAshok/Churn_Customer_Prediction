@@ -6,6 +6,10 @@ from churn.exception import CustomException
 import pymongo
 import sys
 
+import certifi
+
+ca = certifi.where()
+
 
 class MOngoclient:
 
@@ -23,7 +27,7 @@ class MOngoclient:
 
                     raise Exception({f"Envronment variable not exists: {MONGODB_URI}"})
                 
-                client = pymongo.MongoClient(mongodb_uri)
+                client = pymongo.MongoClient(mongodb_uri,tlsCAFile=ca)
 
                 MOngoclient.client = client
             

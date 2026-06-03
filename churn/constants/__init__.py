@@ -1,9 +1,11 @@
 
-
+import os 
 
 DATA_BASE_NAME = "churn"
 COLLECTION_NAME = "churn_records"
 MONGODB_URI = "churn_mongodb"
+
+SCHEMA_FILE = os.path.join("config","schema.yaml")
 
 
 '''
@@ -18,3 +20,16 @@ DATA_INGESTION_INGESTED_FOLDER :str = "Ingested"
 DATA_INGESTION_INGESTED_TRAIN_FILE:str = "train.csv"
 DATA_INGESTION_INGESTED_TEST_FILE : str = "test.csv"
 train_test_split_ratio :float = 0.25
+
+
+"""
+DATA VALIDATION REALTED CONSTANTS STARTS WITH DATA VALIDATION
+
+"""
+
+
+DATA_VALIDATION_MAIN_FOLDER:str = "Data_Validation"
+DATA_VALIDATION_STATUS_FOLDER :str = "Validation_Status"
+DATA_VALIDATION_STATUS_FILE : str = "STATUS.txt"
+DATA_VALIDATION_DRIFT_REPORT_FOLDER :str  = "Drift_Report"
+DATA_VALIDATION_DRIFT_REPORT_FILE : str = "report.yaml"

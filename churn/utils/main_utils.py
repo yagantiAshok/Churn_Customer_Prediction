@@ -1,7 +1,7 @@
 
 import os
 import sys
-from config_box import ConfigBox
+from box import ConfigBox
 from ensure import ensure_annotations
 from churn.exception import CustomException
 from churn.logger import logger
@@ -23,20 +23,19 @@ def read_yaml(file_path:str)->ConfigBox:
 
             data = yaml.safe_load(file)
         
-        data = ConfigBox(data)
+        data_config = ConfigBox(data)
 
         logger.info(f"yaml file {file_path} successfully loaded into config box Object")
 
-        return data
+        return data_config
 
     
     except Exception as e:
 
         raise CustomException(e,sys)
 
-@ensure_annotations
 
-def write_yaml(file_path:str,data:dict)->None:
+def write_yaml(file_path,data)->None:
 
     try:
 
@@ -49,7 +48,7 @@ def write_yaml(file_path:str,data:dict)->None:
 
         with open(file_path,"w")  as file:
 
-            yaml.dump(data,file,default_flow_style=False)
+            yaml.dump(data,file)
         
         logger.info(f" Succesfully data saved into yaml file {file_path}")
 
