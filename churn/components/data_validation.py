@@ -42,7 +42,7 @@ class DataValidation:
 
             excepted_numerical_columns = self.schema_data.numerical_columns
 
-            excepted_categorical_columns = self.schema_data.categorical_column
+            excepted_categorical_columns = self.schema_data.categorical_columns
 
             error_messages = []
 

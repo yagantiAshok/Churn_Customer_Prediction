@@ -3,37 +3,38 @@
 
 
 trainset_columns:
-  customerID: str
-  gender: str
+  customerID: object 
+  gender: object 
   SeniorCitizen: int64
-  Partner: str
-  Dependents: str
+  Partner: object 
+  Dependents: object 
   tenure: int64
-  PhoneService: str
-  MultipleLines: str
-  InternetService: str
-  OnlineSecurity: str
-  OnlineBackup: str
-  DeviceProtection: str
-  TechSupport: str
-  StreamingTV: str
-  StreamingMovies: str
-  Contract: str
-  PaperlessBilling: str
-  PaymentMethod: str
+  PhoneService: object 
+  MultipleLines: object 
+  InternetService: object 
+  OnlineSecurity: object 
+  OnlineBackup: object 
+  DeviceProtection: object 
+  TechSupport: object 
+  StreamingTV: object 
+  StreamingMovies: object 
+  Contract: object 
+  PaperlessBilling: object 
+  PaymentMethod: object 
   MonthlyCharges: float64
-  TotalCharges: str
-  Churn: str
+  TotalCharges: object 
+  Churn: object 
 
 
 numerical_columns:
 
+  - TotalCharges
   - tenure
   - MonthlyCharges
   - SeniorCitizen
 
-categorical_column:
-  - customerID
+categorical_columns:
+
   - gender
   - Partner
   - Dependents
@@ -49,7 +50,10 @@ categorical_column:
   - Contract
   - PaperlessBilling
   - PaymentMethod
-  - TotalCharges
+
+drop_column:
+  
+  column : customerID
 
 Target_column:
   

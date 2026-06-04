@@ -29,3 +29,10 @@ class DataValidationConfig:
     data_validation_status_file :str = os.path.join(data_validation_main_folder,DATA_VALIDATION_STATUS_FOLDER,DATA_VALIDATION_STATUS_FILE)
     data_validation_drift_report_file :str = os.path.join(data_validation_main_folder,DATA_VALIDATION_DRIFT_REPORT_FOLDER,DATA_VALIDATION_DRIFT_REPORT_FILE)
     
+@dataclass
+class DataTransformationConfig:
+
+    data_transformation_main_folder :str = os.path.join(main_artifact,DATA_TRANSFORMATION_MAIN_FOLDER)
+    data_transformation_processed_file_path : str = os.path.join(data_transformation_main_folder,DATA_TRANSFORMATION_PREPROCESS_OBJ_FOLDER,DATA_TRANSFORMATION_PROPROCESS_OBJ_FILE)
+    data_transformation_train_file_path : str = os.path.join(data_transformation_main_folder,DATA_TRANSFORMATION_TRANSFORMED_FOLDER,DATA_TRANSFORMATION_TRAIN_FILE_NAME)
+    data_transformation_test_file_path : str = os.path.join(data_transformation_main_folder,DATA_TRANSFORMATION_TRANSFORMED_FOLDER,DATA_TRANSFORMATION_TEST_FILE_NAME)

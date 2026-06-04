@@ -9,7 +9,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler,OneHotEncoder,OrdinalEncoder
-from sklearn.metrics import accuracy_score,confusion_matrix,precision_score,recall_score,f1_score
+from sklearn.metrics import accuracy_score,confusion_matrix,precision_score,recall_score,f1_score,classification_report
 
 
 
@@ -128,6 +128,8 @@ def evaluate_model(x,y,models,numeric_features,categorical_features):
         print("- precision{:.4f}".format(model_test_precision))
         print("- f1 {:.4f}".format(model_test_f1))
         print("- Recall{:.4f}".format(model_test_recall))
+        print("Classfication_report")
+        print(classification_report(y_test,y_test_pred))
 
 
     report = pd.DataFrame(list(zip(models_list,accuracy_list_test,accuracy_list_train)),columns=["Model","Test_Accuracy","Train_Accuracy"])

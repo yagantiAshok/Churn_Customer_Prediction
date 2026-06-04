@@ -18,3 +18,11 @@ class DataValidationArtifact:
     validation_status:bool
     drift_report_file_path :str
     drft_status:bool
+
+@dataclass
+
+class DataTransformationArtifact:
+
+    preprocess_file_path : str 
+    trasformed_train_file_path : str 
+    transformed_test_file_path : str 

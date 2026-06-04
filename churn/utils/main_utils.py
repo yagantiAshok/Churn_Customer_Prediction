@@ -13,7 +13,6 @@ from typing import Any
 
 
 
-@ensure_annotations
 
 def read_yaml(file_path:str)->ConfigBox:
 
@@ -56,9 +55,8 @@ def write_yaml(file_path,data)->None:
 
         raise CustomException(e,sys)
     
-@ensure_annotations
 
-def save_data_to_numpy(file_path:str,data:Any)->None:
+def save_data_to_numpy(file_path:str,data)->None:
 
     try:
 
@@ -74,7 +72,6 @@ def save_data_to_numpy(file_path:str,data:Any)->None:
         raise CustomException(e,sys)
 
 
-@ensure_annotations
 
 def extract_data_from_nuumpy(file_path:str)->np.ndarray:
 
@@ -90,8 +87,7 @@ def extract_data_from_nuumpy(file_path:str)->np.ndarray:
 
         raise CustomException(e,sys)
 
-@ensure_annotations
-def save_model(file_path:str,data:Any)->None:
+def save_obj(file_path:str,data)->None:
 
     try:
 
@@ -107,8 +103,7 @@ def save_model(file_path:str,data:Any)->None:
 
         raise CustomException(e,sys)
     
-@ensure_annotations
-def load_model(file_path:str)->Any:
+def load_obj(file_path:str)->Any:
 
     try:
 
@@ -123,7 +118,6 @@ def load_model(file_path:str)->Any:
         raise CustomException(e,sys)
     
 
-@ensure_annotations
 
 def create_directories(folders:list[str],verbose:True)->None:
 
@@ -142,7 +136,6 @@ def create_directories(folders:list[str],verbose:True)->None:
 
             raise CustomException(e,sys)
 
-@ensure_annotations
 
 def create_folder_path(folder:str):
 
