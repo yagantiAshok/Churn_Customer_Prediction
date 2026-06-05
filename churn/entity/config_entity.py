@@ -36,3 +36,12 @@ class DataTransformationConfig:
     data_transformation_processed_file_path : str = os.path.join(data_transformation_main_folder,DATA_TRANSFORMATION_PREPROCESS_OBJ_FOLDER,DATA_TRANSFORMATION_PROPROCESS_OBJ_FILE)
     data_transformation_train_file_path : str = os.path.join(data_transformation_main_folder,DATA_TRANSFORMATION_TRANSFORMED_FOLDER,DATA_TRANSFORMATION_TRAIN_FILE_NAME)
     data_transformation_test_file_path : str = os.path.join(data_transformation_main_folder,DATA_TRANSFORMATION_TRANSFORMED_FOLDER,DATA_TRANSFORMATION_TEST_FILE_NAME)
+
+
+@dataclass
+class ModelTrainerConfig:
+
+    model_trainer_main_fodler :str = os.path.join(main_artifact,MODEL_TRAINER_MAIN_FOLDER)
+    model_trainer_trained_path :str = os.path.join(model_trainer_main_fodler,MODEL_TRAINER_TRAINED_FOLDER,MODEL_TRAINDER_TRAINED_OBJECT)
+
+

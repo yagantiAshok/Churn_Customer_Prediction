@@ -26,3 +26,12 @@ class DataTransformationArtifact:
     preprocess_file_path : str 
     trasformed_train_file_path : str 
     transformed_test_file_path : str 
+
+@dataclass
+class ModelTrainerArtifcat:
+
+    fl_score:float
+    recall:float
+    precision:float
+    model_trained_obj_path:str
+    accuracy_score:float

@@ -122,3 +122,26 @@ class DataTransformation:
 
         except Exception as e:
             raise CustomException(e, sys)
+            
+    def initiate_data_transformation(self)->DataTransformationArtifact:
+
+            try:
+                logger.info("Entered Into initiate data transformation function")
+
+                self.transforming_data()
+
+                data_transformation_artifact = DataTransformationArtifact(
+
+                    preprocess_file_path= self.data_transformation_config.data_transformation_processed_file_path,
+
+                    trasformed_train_file_path=self.data_transformation_config.data_transformation_train_file_path,
+
+                    transformed_test_file_path=self.data_transformation_config.data_transformation_test_file_path
+
+                )
+
+                return data_transformation_artifact
+
+            except Exception as e:
+
+                raise CustomException(e,sys)

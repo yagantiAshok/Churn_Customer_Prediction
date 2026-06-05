@@ -6,7 +6,8 @@ from churn.logger import logger
 from churn.exception import CustomException
 from churn.entity.config_entity import (DataIngestionConfig,
                                         DataValidationConfig,
-                                        DataTransformationConfig)
+                                        DataTransformationConfig,
+                                        ModelTrainerConfig)
 
 from churn.pipeline.training_pipeline import TrainingPipeline
 
@@ -18,7 +19,8 @@ try:
     obj = TrainingPipeline(
         data_ingestion_config=DataIngestionConfig,
         data_validation_config=DataValidationConfig,
-        data_transformation_config=DataTransformationConfig
+        data_transformation_config=DataTransformationConfig,
+        Model_trainer_config=ModelTrainerConfig
     )
 
     obj.run_pipeline()

@@ -7,14 +7,17 @@ from churn.exception import CustomException
 from churn.components.data_ingestion import DataIngetion
 from churn.components.data_validation import DataValidation
 from churn.components.data_transformation import DataTransformation
+from churn.components.model_training import ModelTrainer
 
 from churn.entity.config_entity import (DataIngestionConfig,
                                         DataValidationConfig,
-                                        DataTransformationConfig)
+                                        DataTransformationConfig
+                                        ,ModelTrainerConfig)
 
 from churn.entity.artifact_entity import (DataIngestionArtifact,
                                           DataValidationArtifact,
-                                          DataTransformationArtifact)
+                                          DataTransformationArtifact,
+                                          ModelTrainerArtifcat)
                                           
 
 
@@ -22,11 +25,13 @@ class TrainingPipeline:
 
     def __init__(self,data_ingestion_config:DataIngestionConfig, 
                       data_validation_config:DataValidationConfig,
-                      data_transformation_config:DataTransformationConfig):
+                      data_transformation_config:DataTransformationConfig,
+                      Model_trainer_config:ModelTrainerConfig):
         
         self.data_ingestion_config = data_ingestion_config
         self.data_validation_config = data_validation_config
         self.data_transformation_config = data_transformation_config
+        self.model_trainer_config = Model_trainer_config
     
     def start_data_ingestion(self)->DataIngestionArtifact:
 
@@ -76,6 +81,25 @@ class TrainingPipeline:
         except Exception as e:
             raise CustomException(e,sys)
     
+
+    def start_model_trainer(self,data_transfromation_artifcat)->ModelTrainerArtifcat:
+
+        try:
+
+            logger.info("Entered into start model trainer")
+
+            model_trainer_obj = ModelTrainer(model_trainer_config=self.model_trainer_config,data_transformation_artifcat=data_transfromation_artifcat)
+
+            model_trainer_artifcat = model_trainer_obj.initiate_model_training()
+
+            return model_trainer_artifcat
+
+        
+        except Exception as e:
+
+            raise CustomException(e,sys)
+        
+
     def run_pipeline(self):
 
         try:
@@ -92,6 +116,8 @@ class TrainingPipeline:
             
 
             data_transformation_artifact = self.start_data_transformation(data_ingestion_artifact=data_ingestion_artifact)
+
+            model_trainer_artifcat = self.start_model_trainer(data_transfromation_artifcat=data_transformation_artifact)
 
         
         except Exception as e:
