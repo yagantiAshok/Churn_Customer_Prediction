@@ -8,16 +8,19 @@ from churn.components.data_ingestion import DataIngetion
 from churn.components.data_validation import DataValidation
 from churn.components.data_transformation import DataTransformation
 from churn.components.model_training import ModelTrainer
+from churn.components.model_evaluation import ModelEvaluation
 
 from churn.entity.config_entity import (DataIngestionConfig,
                                         DataValidationConfig,
                                         DataTransformationConfig
-                                        ,ModelTrainerConfig)
+                                        ,ModelTrainerConfig,
+                                        ModelEvaluationConfig)
 
 from churn.entity.artifact_entity import (DataIngestionArtifact,
                                           DataValidationArtifact,
                                           DataTransformationArtifact,
-                                          ModelTrainerArtifcat)
+                                          ModelTrainerArtifcat,
+                                          ModelEvaluationArtifact)
                                           
 
 
@@ -26,12 +29,14 @@ class TrainingPipeline:
     def __init__(self,data_ingestion_config:DataIngestionConfig, 
                       data_validation_config:DataValidationConfig,
                       data_transformation_config:DataTransformationConfig,
-                      Model_trainer_config:ModelTrainerConfig):
+                      Model_trainer_config:ModelTrainerConfig,
+                      model_evaluation_config:ModelEvaluationConfig):
         
         self.data_ingestion_config = data_ingestion_config
         self.data_validation_config = data_validation_config
         self.data_transformation_config = data_transformation_config
         self.model_trainer_config = Model_trainer_config
+        self.model_evaluation_config = model_evaluation_config
     
     def start_data_ingestion(self)->DataIngestionArtifact:
 
@@ -98,6 +103,22 @@ class TrainingPipeline:
         except Exception as e:
 
             raise CustomException(e,sys)
+    
+    def start_model_evaluation(self,data_ingestion_artifcat:DataIngestionArtifact,model_trainer_artifcat:ModelTrainerArtifcat)->ModelEvaluationArtifact:
+
+
+        try:
+            logger.info("Entered into start model evaluation function")
+
+            model_evaluation_obj = ModelEvaluation(data_ingestion_artifact=data_ingestion_artifcat,model_trainer_artifact=model_trainer_artifcat)
+
+            evaluation_artifcat = model_evaluation_obj.initiate_model_evaluation()
+
+            return evaluation_artifcat
+        
+        except Exception as e:
+
+            raise CustomException(e,sys)
         
 
     def run_pipeline(self):
@@ -118,6 +139,8 @@ class TrainingPipeline:
             data_transformation_artifact = self.start_data_transformation(data_ingestion_artifact=data_ingestion_artifact)
 
             model_trainer_artifcat = self.start_model_trainer(data_transfromation_artifcat=data_transformation_artifact)
+
+            model_evaluation_artifcat = self.start_model_evaluation(data_ingestion_artifcat=data_ingestion_artifact,model_trainer_artifcat=model_trainer_artifcat)
 
         
         except Exception as e:

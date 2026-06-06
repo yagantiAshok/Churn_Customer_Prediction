@@ -45,3 +45,11 @@ class ModelTrainerConfig:
     model_trainer_trained_path :str = os.path.join(model_trainer_main_fodler,MODEL_TRAINER_TRAINED_FOLDER,MODEL_TRAINDER_TRAINED_OBJECT)
 
 
+@dataclass
+class ModelEvaluationConfig:
+
+    changed_threshold_score :float = MODEL_EVALUATION_CHANGED_THRESHOLD
+
+    s3_bucket_name :str = S3_BUCKET_NAME
+
+    s3_model_key_path :str = MODEL_FILE_NAME

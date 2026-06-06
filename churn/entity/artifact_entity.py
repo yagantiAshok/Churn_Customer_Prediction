@@ -35,3 +35,12 @@ class ModelTrainerArtifcat:
     precision:float
     model_trained_obj_path:str
     accuracy_score:float
+
+@dataclass
+
+class ModelEvaluationArtifact:
+
+    is_model_accepeted :bool
+    changed_accuracy : float
+    s3_model_path : str
+    trained_model_path: str 

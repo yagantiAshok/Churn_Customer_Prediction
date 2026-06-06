@@ -8,6 +8,15 @@ MONGODB_URI = "churn_mongodb"
 SCHEMA_FILE = os.path.join("config","schema.yaml")
 
 
+aws_acces_key = "AWS_ACCESS_KEY_ID"
+aws_secret_access = "AWS_SECRET_ACCESS_KEY"
+region = "eu-north-1"
+
+MODEL_FILE_NAME:str = "model.pkl"
+
+TARGET_COLUMN ="Churn"
+
+
 '''
 DATA_INGESTION COMPONENT REALTED CONSTANTS STARTS WITH DATA_INGESTION
 
@@ -56,6 +65,11 @@ MODEL TRAINER REALATED CONSTANTS STARTS WITH MODEL TRAINER
 MODEL_TRAINER_MAIN_FOLDER :str = "Model_Trainer"
 MODEL_TRAINER_TRAINED_FOLDER :str = "Trained_Model"
 MODEL_TRAINDER_TRAINED_OBJECT: str = "model.joblib"
+
+
+
+MODEL_EVALUATION_CHANGED_THRESHOLD :float = 0.02
+S3_BUCKET_NAME : str = "churnprojectbucket"
 
 
 
