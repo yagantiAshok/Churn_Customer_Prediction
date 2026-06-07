@@ -47,3 +47,15 @@
 # print(data.trainset_columns)
 
 
+class student:
+
+    def __init__(self,name,age):
+       
+       self.name = name
+       self.age = age
+
+
+# obj1 = student(name="ashok",age=8)
+
+
+# joblib.dump(obj1,filename="custom.pkl")

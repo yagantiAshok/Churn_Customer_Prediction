@@ -53,3 +53,9 @@ class ModelEvaluationConfig:
     s3_bucket_name :str = S3_BUCKET_NAME
 
     s3_model_key_path :str = MODEL_FILE_NAME
+
+@dataclass
+class ModelPusherConfig:
+
+    bucket_name :str = BUCKET_NAME
+    s3_key_path : str = MODEL_FILE_NAME

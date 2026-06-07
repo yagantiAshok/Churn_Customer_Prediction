@@ -8,7 +8,7 @@ from botocore.exceptions import ClientError
 from mypy_boto3_s3.service_resource import Bucket
 from io import StringIO
 import os 
-import pickle
+import joblib
 
 
 
@@ -69,7 +69,7 @@ class SimpleStorageService:
             
             logger.info("S3 key path not avialble")
 
-            return False
+            return None
 
         
         except Exception as e:
@@ -115,25 +115,6 @@ class SimpleStorageService:
 
         except Exception as e:
             raise CustomException(e,sys)
-    
-    def create_folder(self,folder_name :str, bucket_name:str ):
-
-        try:
-
-            logger.info("Entered into create folder method in simple staorage class")
-
-            self.resources.Objects(bucket_name,folder_name).load()
-
-        except ClientError as e:
-
-            if e.response["Error"]["Code"] == "404":
-
-                folder_obj = folder_name + "/"
-                self.client.put_object(Bucket=bucket_name, key = folder_obj)
-            
-            else:
-
-                pass
 
 
 
@@ -151,7 +132,7 @@ class SimpleStorageService:
 
             file_object = self.get_file_object(model_file,bucket_name)
             model_obj = self.read_object(file_object,decode = False)
-            model = pickle.loads(model_obj)
+            model = joblib.load(model_obj)
 
             logger.info("Modle loaded from s3 bucket")
 
@@ -162,7 +143,7 @@ class SimpleStorageService:
             raise CustomException(e,sys)
         
         
-    def upload_file(self,from_filename: str, to_filename :str,bucket_name:str,remove:bool=True):
+    def upload_file(self,from_filename: str, to_filename :str,bucket_name:str,remove:bool=False):
 
         try :
 

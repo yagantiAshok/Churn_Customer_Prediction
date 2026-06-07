@@ -24,24 +24,22 @@ class ModelEvaluation:
 
     def __init__(self,model_evaluation_config:ModelEvaluationConfig,
                       model_trainer_artifact:ModelTrainerArtifcat,
-                      data_ingestion_artifact:DataIngestionArtifact):
+                      data_ingestion_artifact:DataIngestionArtifact,
+                      s3_estimator = s3estimator):
         
         self.model_evaluation_config = model_evaluation_config
         self.model_trainer_artifcat = model_trainer_artifact
         self.data_ingestion_artifcat = data_ingestion_artifact
+
+        self.s3estimator :s3estimator = s3_estimator(bucket_name=self.model_evaluation_config.s3_bucket_name,model_path=self.model_evaluation_config.s3_model_key_path)
+
+
     
     def get_best_model(self):
 
         try:
 
-            bucket_name = self.model_evaluation_config.s3_bucket_name
-            model_path = self.model_evaluation_config.s3_model_key_path
-
-            s3_estimator = s3estimator(
-                bucket_name=bucket_name,model_path=model_path
-            )
-
-            model = s3_estimator.is_model_present()
+            model = self.s3estimator.is_model_present()
 
             if model is None:
 
@@ -80,7 +78,11 @@ class ModelEvaluation:
 
             if best_model is not None:
 
-                y_hat_best_model = best_model.predict(x)
+                logger.info("best model ", {best_model})
+
+                model : churnmodel = self.s3estimator.load_model()
+
+                y_hat_best_model = model.predict(x)
 
                 best_model_f1_score = f1_score(y,y_hat_best_model)
             

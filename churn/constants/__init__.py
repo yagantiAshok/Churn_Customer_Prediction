@@ -12,7 +12,9 @@ aws_acces_key = "AWS_ACCESS_KEY_ID"
 aws_secret_access = "AWS_SECRET_ACCESS_KEY"
 region = "eu-north-1"
 
-MODEL_FILE_NAME:str = "model.pkl"
+MODEL_FILE_NAME:str = "model.joblib"
+
+BUCKET_NAME: str = "churnprojectbucket"
 
 TARGET_COLUMN ="Churn"
 

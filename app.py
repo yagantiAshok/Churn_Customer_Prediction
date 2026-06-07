@@ -7,7 +7,9 @@ from churn.exception import CustomException
 from churn.entity.config_entity import (DataIngestionConfig,
                                         DataValidationConfig,
                                         DataTransformationConfig,
-                                        ModelTrainerConfig)
+                                        ModelTrainerConfig,
+                                        ModelEvaluationConfig,
+                                        ModelPusherConfig)
 
 from churn.pipeline.training_pipeline import TrainingPipeline
 
@@ -20,7 +22,9 @@ try:
         data_ingestion_config=DataIngestionConfig,
         data_validation_config=DataValidationConfig,
         data_transformation_config=DataTransformationConfig,
-        Model_trainer_config=ModelTrainerConfig
+        Model_trainer_config=ModelTrainerConfig,
+        model_evaluation_config=ModelEvaluationConfig,
+        model_pusher_config=ModelPusherConfig
     )
 
     obj.run_pipeline()

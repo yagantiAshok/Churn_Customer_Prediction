@@ -9,18 +9,21 @@ from churn.components.data_validation import DataValidation
 from churn.components.data_transformation import DataTransformation
 from churn.components.model_training import ModelTrainer
 from churn.components.model_evaluation import ModelEvaluation
+from churn.components.model_pusher import ModelPusher
 
 from churn.entity.config_entity import (DataIngestionConfig,
                                         DataValidationConfig,
                                         DataTransformationConfig
                                         ,ModelTrainerConfig,
-                                        ModelEvaluationConfig)
+                                        ModelEvaluationConfig,
+                                        ModelPusherConfig)
 
 from churn.entity.artifact_entity import (DataIngestionArtifact,
                                           DataValidationArtifact,
                                           DataTransformationArtifact,
                                           ModelTrainerArtifcat,
-                                          ModelEvaluationArtifact)
+                                          ModelEvaluationArtifact,
+                                          ModelPusherArtifact)
                                           
 
 
@@ -30,13 +33,15 @@ class TrainingPipeline:
                       data_validation_config:DataValidationConfig,
                       data_transformation_config:DataTransformationConfig,
                       Model_trainer_config:ModelTrainerConfig,
-                      model_evaluation_config:ModelEvaluationConfig):
+                      model_evaluation_config:ModelEvaluationConfig,
+                      model_pusher_config:ModelPusherConfig):
         
         self.data_ingestion_config = data_ingestion_config
         self.data_validation_config = data_validation_config
         self.data_transformation_config = data_transformation_config
         self.model_trainer_config = Model_trainer_config
         self.model_evaluation_config = model_evaluation_config
+        self.model_pusher_config = model_pusher_config
     
     def start_data_ingestion(self)->DataIngestionArtifact:
 
@@ -110,12 +115,26 @@ class TrainingPipeline:
         try:
             logger.info("Entered into start model evaluation function")
 
-            model_evaluation_obj = ModelEvaluation(data_ingestion_artifact=data_ingestion_artifcat,model_trainer_artifact=model_trainer_artifcat)
+            model_evaluation_obj = ModelEvaluation(model_evaluation_config=self.model_evaluation_config,data_ingestion_artifact=data_ingestion_artifcat,model_trainer_artifact=model_trainer_artifcat)
 
             evaluation_artifcat = model_evaluation_obj.initiate_model_evaluation()
 
             return evaluation_artifcat
         
+        except Exception as e:
+
+            raise CustomException(e,sys)
+    
+    def start_model_pusher(self,model_evaluation_artifcat:ModelEvaluationArtifact)->ModelPusherArtifact:
+
+        try:
+
+            logger.info("Entered into start model_pusher function")
+
+            model_pusher_obj = ModelPusher(model_pusher_config=self.model_pusher_config,model_evalutaion_artifact=model_evaluation_artifcat)
+
+            return model_pusher_obj.initiate_model_pusher()
+
         except Exception as e:
 
             raise CustomException(e,sys)
@@ -141,6 +160,14 @@ class TrainingPipeline:
             model_trainer_artifcat = self.start_model_trainer(data_transfromation_artifcat=data_transformation_artifact)
 
             model_evaluation_artifcat = self.start_model_evaluation(data_ingestion_artifcat=data_ingestion_artifact,model_trainer_artifcat=model_trainer_artifcat)
+
+            if  not model_evaluation_artifcat.is_model_accepeted:
+
+                return f"Model Is not Accepted"
+
+            model_evaluation_artifact = self.start_model_pusher(model_evaluation_artifcat=model_evaluation_artifcat)
+            
+
 
         
         except Exception as e:
