@@ -6,7 +6,7 @@ import sys
 from churn.externel_connections.connection import s3Client
 from botocore.exceptions import ClientError
 from mypy_boto3_s3.service_resource import Bucket
-from io import StringIO
+from io import StringIO,BytesIO
 import os 
 import joblib
 
@@ -77,25 +77,21 @@ class SimpleStorageService:
             raise CustomException(e,sys)
         
     @staticmethod
-    def read_object(object_name: str, decode:bool =True, make_readable:bool =False):
-
+    def read_object(object_name):
+ 
         try:
-
             logger.info("Entered into read object method")
 
-            fun = (
-                lambda: object_name.get()['Body'].read().decode()
-                if decode is True
-                else object_name.get()["Body"].read()
-            )
+            response = object_name.get()  
+            
+            file_bytes = response['Body'].read()
 
-            conv_fun = lambda: StringIO(fun()) if make_readable is True else fun()
-
-            return conv_fun()
-
+            return BytesIO(file_bytes)
+  
+                
         except Exception as e:
+            raise CustomException(e, sys)
 
-            raise CustomException(e,sys)
         
     def get_file_object(self, filename: str, bucket_name:str):
 
@@ -131,7 +127,7 @@ class SimpleStorageService:
             model_file = func()
 
             file_object = self.get_file_object(model_file,bucket_name)
-            model_obj = self.read_object(file_object,decode = False)
+            model_obj = self.read_object(file_object)
             model = joblib.load(model_obj)
 
             logger.info("Modle loaded from s3 bucket")

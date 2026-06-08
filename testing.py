@@ -47,15 +47,35 @@
 # print(data.trainset_columns)
 
 
-class student:
+# class student:
 
-    def __init__(self,name,age):
+#     def __init__(self,name,age):
        
-       self.name = name
-       self.age = age
+#        self.name = name
+#        self.age = age
 
 
 # obj1 = student(name="ashok",age=8)
 
 
 # joblib.dump(obj1,filename="custom.pkl")
+import streamlit as st
+
+import os 
+from churn.utils.main_utils import read_yaml
+
+path = os.path.join("config","schema.yaml")
+
+data  = read_yaml(path)
+
+user_data = {}
+
+for col, items in data.fields.items():
+
+    user_data[col]=st.selectbox(col,items)
+
+if st.button("predict"):
+
+    st.write(user_data)
+
+
