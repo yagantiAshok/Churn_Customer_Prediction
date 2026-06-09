@@ -12,6 +12,9 @@ from pandas import DataFrame
 class s3estimator:
 
     def __init__(self,bucket_name,model_path):
+
+        print("s3_estimator_id",id(self))
+        print()
         
 
         self.service = SimpleStorageService()

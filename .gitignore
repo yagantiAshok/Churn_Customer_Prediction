@@ -2,3 +2,6 @@
 
 notebook/churn.csv
 
+.env
+
+LOG/

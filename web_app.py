@@ -50,12 +50,15 @@ customer_data = CustomerData(**user_data)
 
 data_frame = customer_data.convert_customer_data_todataframe()
 
-prediction = ChurnClassifier()
+@st.cache_resource
+def get_predictor():
+    return ChurnClassifier()
+
+prediction = get_predictor()
 
 pred = prediction.predict(data_frame=data_frame)[0]
 
 if st.button("Predict"):
-
 
 
     if pred==1:

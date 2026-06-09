@@ -97,11 +97,11 @@ class CustomerData:
 class ChurnClassifier:
 
     def __init__(self,bucket_name = BUCKET_NAME,model_key_path = MODEL_FILE_NAME):
-        
-        self.bucket_name = bucket_name
-        self.model_key_path = model_key_path
 
-        logger.info("loading model")
+        print("Classifier created")
+        
+
+        self.s3_estimator = s3estimator(bucket_name=bucket_name,model_path=model_key_path)
 
     
     def predict(self,data_frame:pd.DataFrame):
@@ -111,9 +111,7 @@ class ChurnClassifier:
             logger.info("Entered into predict function")
 
 
-            s3_estimator = s3estimator(bucket_name=self.bucket_name,model_path=self.model_key_path)
-
-            churn_class = s3_estimator.predict(data=data_frame)
+            churn_class = self.s3_estimator.predict(data=data_frame)
 
             return churn_class
         

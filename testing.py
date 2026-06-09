@@ -59,23 +59,49 @@
 
 
 # joblib.dump(obj1,filename="custom.pkl")
-import streamlit as st
+# import streamlit as st
 
-import os 
-from churn.utils.main_utils import read_yaml
+# import os 
+# from churn.utils.main_utils import read_yaml
 
-path = os.path.join("config","schema.yaml")
+# path = os.path.join("config","schema.yaml")
 
-data  = read_yaml(path)
+# data  = read_yaml(path)
 
-user_data = {}
+# user_data = {}
 
-for col, items in data.fields.items():
+# for col, items in data.fields.items():
 
-    user_data[col]=st.selectbox(col,items)
+#     user_data[col]=st.selectbox(col,items)
 
-if st.button("predict"):
+# if st.button("predict"):
 
-    st.write(user_data)
+#     st.write(user_data)
 
+
+# class st:
+    
+#     def __init__(self,age):
+
+#         self.name = None
+
+#         self.age = age
+
+# ob1 = st(age=67)
+
+# ob1.name = "ashok"
+
+# print(ob1.age,ob1.name)
+
+# ob = ob1
+
+# print(ob.age,ob.name)
+
+a = [1,2,3]
+
+print(a)
+
+a = [0,2,2]
+
+print(a)
 

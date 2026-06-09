@@ -18,7 +18,7 @@ class churnmodel:
     def predict(self,Dataframe :DataFrame):
 
         try :
-            logger.info("Entered into predict fundtion inside visamodel")
+            logger.info("Entered into predict fundtion inside churnmodel")
 
             transformed_features = self.preprocessing_obj.transform(Dataframe)
 
