@@ -49,7 +49,7 @@ customer_data = CustomerData(**user_data)
 data_frame = customer_data.convert_customer_data_todataframe()
 
 @st.cache_resource
-def get_predictor():
+def get_predictor():#catch memory 
     return ChurnClassifier()
 
 
