@@ -52,11 +52,13 @@ data_frame = customer_data.convert_customer_data_todataframe()
 def get_predictor():
     return ChurnClassifier()
 
-prediction = get_predictor()
-
-pred = prediction.predict(data_frame=data_frame)[0]
 
 if st.button("Predict"):
+
+    prediction = get_predictor()
+
+    pred = prediction.predict(data_frame=data_frame)[0]
+
 
 
     if pred==1:
