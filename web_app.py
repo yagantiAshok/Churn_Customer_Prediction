@@ -57,11 +57,11 @@ if st.button("Predict"):
 
     prediction = get_predictor()
 
-    pred = prediction.predict(data_frame=data_frame)[0]
+    pred = prediction.predict(data_frame=data_frame)
 
 
 
-    if pred==1:
+    if pred[0]==1:
 
         st.success("Customer is Churn")
     
