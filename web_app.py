@@ -1,6 +1,4 @@
 
-
-
 from churn.pipeline.predicting_pipeline import CustomerData,ChurnClassifier
 from churn.logger import logger
 from churn.exception import CustomException
