@@ -58,4 +58,5 @@ jobs:
             docker run -d \
               --name churn-app \
               -p 8501:8501 \
+              --env-file /home/ubuntu/.env \
               ${{ steps.login-ecr.outputs.registry }}/${{ secrets.ECR_REPOSITORY }}:latest
