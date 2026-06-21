@@ -97,11 +97,75 @@
 
 # print(ob.age,ob.name)
 
-a = [1,2,3]
+# a = [1,2,3]
 
-print(a)
+# print(a)
 
-a = [0,2,2]
+# a = [0,2,2]
 
-print(a)
+# print(a)
+
+
+# class student:
+
+#     data = None
+
+#     def __init__(self,name="ashok"):
+        
+#         if student.data is None:
+
+#             student.data = name
+
+#             self.name = name
+
+# obj = student()
+
+# print(obj.__dict__)
+
+# print(obj.data)
+
+# obj1 = student()
+
+# print(obj1.__dict__)
+
+# print(obj1.data)
+
+# class Student:
+
+#     data = None
+
+#     def __init__(self):
+
+#         if Student.data is None:
+
+#             data = "ashok"
+
+#             Student.data = data
+
+#         print(data)
+
+# obj = Student()
+
+# obj1 = Student()
+
+# from churn.constants import SCHEMA_FILE
+
+# from churn.utils.main_utils import read_yaml
+# import os 
+
+# data = read_yaml(os.path.join("config\model.yaml"))
+
+# model = data.model_name
+
+# print(model.model)
+
+# params = data.model_params
+
+# print(params)
+
+# from setup import models
+
+# print(len(models))
+
+# print(models.values())
 

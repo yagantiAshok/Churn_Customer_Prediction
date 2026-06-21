@@ -1,0 +1,14 @@
+
+
+model_name:
+ model: XGBClassifier
+
+model_params:
+ n_estimators: 50
+ max_depth: 3
+ learning_rate: 0.016108908906629638
+ subsample: 0.8629830992909773
+ colsample_bytree: 0.8889966919939262
+
+
+ 

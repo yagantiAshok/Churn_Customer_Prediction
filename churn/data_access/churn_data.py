@@ -5,7 +5,7 @@ import pandas as pd
 import sys
 from churn.logger import logger
 from churn.exception import CustomException
-from churn.externel_connections.connection import MOngoclient
+from churn.externel_connections.connection import MongoClient
 from typing import Optional
 
 
@@ -13,7 +13,7 @@ class ChurnData:
 
     def __init__(self):
 
-        self.mongo_client = MOngoclient()
+        self.mongo_client = MongoClient()
     
 
     def extract_data_from_mongodb(self,collection_name:str,database_name:Optional[str]=None)->pd.DataFrame:

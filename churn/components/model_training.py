@@ -10,14 +10,18 @@ from churn.entity.estimator import churnmodel
 from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score,f1_score,recall_score,precision_score
 import numpy as np
+from churn.model_registry.models import models
+from churn.constants import MODEL_FILE
 
 class ModelTrainer:
 
     def __init__(self,model_trainer_config:ModelTrainerConfig,
-                      data_transformation_artifcat:DataTransformationArtifact):
+                      data_transformation_artifcat:DataTransformationArtifact,
+                      model_yaml_file = MODEL_FILE):
         
         self.model_trainer_config = model_trainer_config
         self.data_transformation_artifcat = data_transformation_artifcat
+        self.model_file = read_yaml(model_yaml_file)
     
 
 
@@ -84,9 +88,13 @@ class ModelTrainer:
             x_test,y_test = self.__split(test_processed_data)
 
 
-            model = SVC()
+            model = models[self.model_file.model_name.model]
 
-            trained_model = model.fit(x_train,y_train)
+            params = self.model_file.model_params
+
+            params_loaded_model = model(**params)
+
+            trained_model = params_loaded_model.fit(x_train,y_train)
 
 
             y_pred = trained_model.predict(x_test)

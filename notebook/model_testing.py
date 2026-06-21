@@ -5,12 +5,13 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.pipeline import Pipeline
+from sklearn.pipeline import Pipeline 
 from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler,OneHotEncoder,OrdinalEncoder
 from sklearn.metrics import accuracy_score,confusion_matrix,precision_score,recall_score,f1_score,classification_report
-
+from imblearn.pipeline import Pipeline as imblearn_pipeline
+from imblearn.over_sampling import SMOTE
 
 
 
@@ -26,7 +27,7 @@ def preprocessor(numeric_features,categorical_features):
 
     categorical_pipeline = Pipeline(steps=[
         ("imputer",SimpleImputer(strategy="most_frequent")),
-        ("scaler",OneHotEncoder(handle_unknown="ignore"))
+        ("scaler",OneHotEncoder(handle_unknown="ignore",drop="first"))
 
 
     ])
@@ -81,9 +82,11 @@ def evaluate_model(x,y,models,numeric_features,categorical_features):
 
         model = list(models.values())[i]
         
-        training_pipeline =  Pipeline([
+        training_pipeline = imblearn_pipeline([
 
            ("preprocessing",preprocessing),
+
+           ("smote",SMOTE(random_state=42)),
 
             ("model",model)])
         
@@ -94,6 +97,8 @@ def evaluate_model(x,y,models,numeric_features,categorical_features):
 
         y_train_pred = training_pipeline.predict(x_train)
         y_test_pred = training_pipeline.predict(x_test)
+
+        # y_test_proba = training_pipeline.predict_proba(x_test)[:,1]
 
         # training set performances
 
@@ -110,20 +115,19 @@ def evaluate_model(x,y,models,numeric_features,categorical_features):
         print(list(models.keys())[i])
         models_list.append(list(models.keys())[i])
 
-        print("model performance for training Data ")
-        print("- Accuracy {:.4f}".format(model_train_accuracy))
+        # print("model performance for training Data ")
+        # print("- Accuracy {:.4f}".format(model_train_accuracy))
         accuracy_list_train.append(model_train_accuracy)
-        print("- Confusion_matrix",modle_train_confusion)
-        print("- precision{:.4f}".format(model_train_precision))
-        print("- f1 {:.4f}".format(model_train_f1))
-        print("- Recall{:.4f}".format(model_train_recall))
+        # print("- Confusion_matrix",modle_train_confusion)
+        # print("- precision{:.4f}".format(model_train_precision))
+        # print("- f1 {:.4f}".format(model_train_f1))
+        # print("- Recall{:.4f}".format(model_train_recall))
 
-        print("----------------------------")
+        # print("----------------------------")
 
 
-        print("model performance for test Data ")
+        print("model performance for test Data ",end="\t")
         print("- Accuracy {:.4f}".format(model_test_accuracy))
-        accuracy_list_test.append(model_test_accuracy)
         print("- Confusion_matrix",modle_test_confusion)
         print("- precision{:.4f}".format(model_test_precision))
         print("- f1 {:.4f}".format(model_test_f1))
@@ -131,7 +135,24 @@ def evaluate_model(x,y,models,numeric_features,categorical_features):
         print("Classfication_report")
         print(classification_report(y_test,y_test_pred))
 
+        accuracy_list_test.append(model_test_accuracy)
+
+
+        # model_object = training_pipeline.named_steps["model"]
+
+        # preprocess_obj = training_pipeline.named_steps["preprocessing"]
+
+        # feature_names = preprocess_obj.get_feature_names_out()
+
+        # coefficients = model_object.coef_.flatten()
+
+        # print("Feature Names:", list(feature_names))
+
+        # print("Coefficients:", list(coefficients))
+
+        # coef_df = pd.DataFrame(data= {"Coefficients":coefficients},index=feature_names)
+
 
     report = pd.DataFrame(list(zip(models_list,accuracy_list_test,accuracy_list_train)),columns=["Model","Test_Accuracy","Train_Accuracy"])
 
-    return report 
+    return report #coef_df,x_test,y_test_pred,y_test_proba,y_test

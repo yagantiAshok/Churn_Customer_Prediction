@@ -7,6 +7,7 @@ MONGODB_URI = "churn_mongodb"
 
 SCHEMA_FILE = os.path.join("config","schema.yaml")
 
+MODEL_FILE = os.path.join("config","model.yaml")
 
 aws_acces_key = "AWS_ACCESS_KEY_ID"
 aws_secret_access = "AWS_SECRET_ACCESS_KEY"

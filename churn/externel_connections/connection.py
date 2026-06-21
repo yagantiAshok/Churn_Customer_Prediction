@@ -12,7 +12,7 @@ import certifi
 ca = certifi.where()
 
 
-class MOngoclient:
+class MongoClient:
 
     client = None
 
@@ -20,25 +20,30 @@ class MOngoclient:
 
         try :
 
-            if MOngoclient.client is None:
+            if MongoClient.client is None:
 
                 mongodb_uri = os.getenv(MONGODB_URI)
 
                 if mongodb_uri is None:
 
-                    raise Exception({f"Envronment variable not exists: {MONGODB_URI}"})
+                    raise ValueError(f"Envronment variable {MONGODB_URI} not exists")
                 
-                client = pymongo.MongoClient(mongodb_uri,tlsCAFile=ca)
 
-                MOngoclient.client = client
+                MongoClient.client = pymongo.MongoClient(mongodb_uri,tlsCAFile=ca)
+
+                MongoClient.client.admin.command("ping")
+
+                logger.info("MomgoDb Connection successfully Established")
             
-            self.database = client[data_base]
+            self.database = MongoClient.client[data_base]
             
-            self.client = client
+            self.client = MongoClient.client
 
             logger.info(f"MongoDb Connection success ")
         
         except Exception as e:
+
+            logger.info("MongoDb initiiztaion failed")
             
             raise CustomException(e,sys)
         
