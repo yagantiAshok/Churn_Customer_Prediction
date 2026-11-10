@@ -1,70 +1,69 @@
 
-from churn.pipeline.predicting_pipeline import CustomerData,ChurnClassifier
-from churn.logger import logger
-from churn.exception import CustomException
-import streamlit as st
-
+import streamlit
 from churn.utils.main_utils import read_yaml
 from churn.constants import SCHEMA_FILE
+import requests
 
+API_URL = "http://127.0.0.1:8000/predict"
+
+
+st = streamlit
 data = read_yaml(SCHEMA_FILE)
-
-
-
-
-import streamlit as st
-
-st.set_page_config("Churn Prediction",layout="centered")
-
+st.set_page_config(
+    page_title="Churn Prediction",
+    layout="centered"
+)
 st.title("Customer Churn Prediction")
 
+with st.form("churn form "):
 
-user_data = {}
+    user_data = {}
+    for keys , values in data.fields.items():
+        user_data[keys] = st.selectbox(keys,values)
 
-for field, options in data.fields.items():
+    user_data["tenure"] = st.number_input(
+        "tenure",
+        min_value=0,
+        value=0
+    )
 
-    user_data[field] = st.selectbox(field, options)
+    user_data["MonthlyCharges"] = st.number_input(
+        "MonthlyCharges",
+        min_value=0.0,
+        value=0.0
+    )
 
-user_data["tenure"] = st.number_input(
-    "tenure",
-    min_value=0,
-    value=0
-)
+    user_data["TotalCharges"] = st.number_input(
+        "TotalCharges",
+        min_value=0.0,
+        value=0.0
+    )
 
-user_data["MonthlyCharges"] = st.number_input(
-    "MonthlyCharges",
-    min_value=0.0,
-    value=0.0
-)
+    submit = st.form_submit_button("predict")
 
-user_data["TotalCharges"] = st.number_input(
-    "TotalCharges",
-    min_value=0.0,
-    value=0.0
-)
+if submit:
 
+    try:
+        response = requests.post(
+            json=user_data,
+            url = API_URL,
+            timeout=90
+        )
 
-customer_data = CustomerData(**user_data)
+        response.raise_for_status()
+        result = response.json()
+        prediction = result["prediction"]
 
-data_frame = customer_data.convert_customer_data_todataframe()
+        print(prediction)
 
-@st.cache_resource
-def get_predictor():#catch memory 
-    return ChurnClassifier()
-
-
-if st.button("Predict"):
-
-    prediction = get_predictor()
-
-    pred = prediction.predict(data_frame=data_frame)[0]
+        if prediction == 1:
+            st.warning("Customer is Churn ")
+        else:
+            st.success("Customer will not churn")
 
 
+    except requests.exceptions.RequestException as e:
+        st.error(f"API request failed: {e}")
 
-    if pred==1:
-
-        st.success("Customer is Churn")
-    
-    else:
-
-        st.error("Cutomer is not churn ")
+    except (ValueError, KeyError, TypeError) as e:
+        st.error(f"Invalid API response: {e}")

@@ -20,7 +20,7 @@ Some important things I learned:
 
 The goal of this project is to predict whether a customer will churn or stay using the Telco Customer Churn dataset.
 
-This project was not only focused on model training. A major part of the work was understanding the data, identifying which features contain useful information, analyzing model errors, and understanding how class imbalance affects predictions.
+This project was not only clsfocused on model training. A major part of the work was understanding the data, identifying which features contain useful information, analyzing model errors, and understanding how class imbalance affects predictions.
 
 ---
 

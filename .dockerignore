@@ -1,7 +1,5 @@
 
 
-
-
 notebook/
 model_testing.py
 .gitignore
@@ -16,3 +14,4 @@ __pycache__
 .env
 LOG/
 web_new_app.py
+.github/

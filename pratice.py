@@ -169,3 +169,15 @@
 
 # print(models.values())
 
+
+
+class fake:
+    def __init__(self):
+        self.prediction = 0
+    def predict(self):
+        print("something")
+
+obj  = fake()
+obj.predict = 1
+print(obj.__dict__)
+fake.predict()
