@@ -6,7 +6,6 @@ notebook/churn.csv
 
 LOG/
 
-.github/
 
 __pycache__/
 *.pyc

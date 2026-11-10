@@ -1,6 +1,6 @@
 
 from copy import deepcopy
-from fast import app , get_predictor
+from fast.fast import app , get_predictor
 from fastapi.testclient import TestClient
 import pytest
 

@@ -1,7 +1,7 @@
 
 
 import pytest
-from conftest import VALID_CUSTOMER
+from tests.conftest import VALID_CUSTOMER
 
 @pytest.mark.parametrize("field_value",list(VALID_CUSTOMER.keys()))
 def test_every_field_is_required(client,fake_predictor,valid_cutomer,field_value):
